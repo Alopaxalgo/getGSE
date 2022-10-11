@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import sys
 from pysradb.sraweb import SRAweb
 import os
 import wget
@@ -8,11 +9,14 @@ import math
 import time
 from pathlib import Path
 import docker
+from . import __version__
+
 
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'GSE Downloder')
     # nargs를 사용하여 복수의 인자가 올 수 있음
     parser.add_argument('--gse', nargs='+', required=True, help="GSE number") 
+    parser.add_argument('--version', action="version", version="%(prog)s {version}".format(version=__version__)) 
 
     gse = parser.parse_args().gse
 
