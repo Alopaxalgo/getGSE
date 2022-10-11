@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from io import open
 from os import path
 import pathlib
-from getgse import __version__
+from getgse.__init__ import __version__
 
 pname = "getgse"
 

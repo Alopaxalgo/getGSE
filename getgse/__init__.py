@@ -1,4 +1,3 @@
-from getgse.getgse import *
 
 __all__ = ['getgse']
 
