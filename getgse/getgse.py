@@ -9,8 +9,6 @@ import time
 from pathlib import Path
 import docker
 
-db = SRAweb()
-
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'GSE Downloder')
     # nargs를 사용하여 복수의 인자가 올 수 있음
@@ -31,7 +29,7 @@ def bar_custom(current, total, width=80):
 def download(url, file_name = None, out_path="."):
     Path(out_path+"/").mkdir(parents=True, exist_ok=True)
     if not file_name:
-        file_name = gse+"/"+url.split('/')[-1]
+        file_name = out_path+"/"+url.split('/')[-1]
 
     print("Downloading", file_name, "from", url)
     wget.download(url, out=file_name, bar=bar_custom)
@@ -43,7 +41,8 @@ def run_fasterq_dump(SRR, out_path):
     volumes_dict = {wd: {'bind': '/output', 'mode': 'rw'}}
     client.containers.run("ncbi/sra-tools", ['fasterq-dump', SRR, '--split-files', '-p'], privileged = True, auto_remove=True, volumes=volumes_dict, working_dir='/output', stderr=True, stdout=True)
 
-if __name__ == '__main__':
+def cli():
+    db = SRAweb()
     GSE = get_arguments()
 
     all_SRPs = []
@@ -92,3 +91,6 @@ if __name__ == '__main__':
             
     all_metadata = db.sra_metadata(all_SRPs, detailed=True)
     all_metadata.to_csv('all_metadata.tsv', sep="\t", header=True, index=False)
+
+if __name__ == "__main__":
+    cli()
