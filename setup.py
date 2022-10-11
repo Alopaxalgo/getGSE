@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 from io import open
 from os import path
 import pathlib
+from getgse import __version__
 
 pname = "getgse"
 
@@ -11,7 +12,7 @@ HERE = pathlib.Path(__file__).parent
 # The text of the README file
 README = (HERE / "README.md").read_text()
 
-VERSION = '0.1.0.9'
+VERSION = __version__
 
 # automatically captured required modules for install_requires in requirements.txt and as well as configure dependency links
 with open(path.join(HERE, 'requirements.txt'), encoding='utf-8') as f:
